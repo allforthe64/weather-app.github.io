@@ -9,9 +9,15 @@ body {
     background-attachment: fixed;
 }
 
+#form-container {
+    display: inline-flex;
+    margin-top: 50px;
+}
+
 input {
     background: transparent;
-    margin-top: 20%;
+    margin-left: 20px;
+    height: 40px;
     border: 1px solid rgb(245, 254, 255);
     font-size:25px;
     color:rgb(245, 254, 255);
@@ -36,13 +42,18 @@ input:focus {
 #icon {
     color: rgb(245, 254, 255);
     margin-top: 40px;
-    font-size: 30px;
+    font-size: 40px;
 }
 
 .container {
     width: 80%;
     display: flex;
     flex-direction: column;
+    border-left: 2px solid rgb(245, 254, 255);
+}
+
+#inner-container {
+    margin-left: 25px;
 }
 
 .forecast {
@@ -53,9 +64,20 @@ input:focus {
 p {
     text-align: left;
     color: rgb(245, 254, 255);
-    font-size: 22px;
+    font-size: 26px;
+    margin-top: 10px;
 }
 
 #low {
-    margin-left: 25px;
+    margin-left: 26px;
+    font-size: 32px;
+}
+
+#high {
+    font-size: 32px;
+}
+
+img {
+    width: 100px;
+    height: 100px;
 }

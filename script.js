@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     //turn off all of the items
     document.querySelector('#main-plate').style.display='none';
     document.querySelector('.container').style.display="none";
+    document.querySelector('img').style.display="none";
 
     //get the input field and wait for the user to push the enter key
     var textField = document.querySelector('input').addEventListener('keydown', function(event) {
@@ -23,22 +24,37 @@ document.addEventListener('DOMContentLoaded', function (event) {
             console.log(data)
             console.log(data["current"]["temp_f"]);
 
+            clouds = [1006, 1003, 1009, 1030, 1135, 1147];
+            maybeRain = [1063, 1069, 1072, 1087, 1150];
+            rain = [1153, 1168, 1171, 1180, 1183, 1186, 1189, 1192, 1195, 1198, 1201, 1240, 1243, 1246];
+            snow = [1066, 1114, 1117, 1204, 1207, 1210, 1213, 1216, 1219, 1222, 1225, 1237, 1249, 1252, 1255, 1258, 1261, 1264];
+            thunder = [1273, 1276, 1279, 1282];
+
             //set plate to visible
             mainPlate = document.querySelector('#main-plate');
             mainPlate.style.display = 'block';
+            document.querySelector('img').style.display="block";
+
+            if (clouds.includes(data["current"]["condition"]["code"])) {
+                document.querySelector('#pic').src = "119.png";
+            } else if (data["current"]["condition"]["code"] == 1000) {
+                document.querySelector('#pic').src = "113.png";
+            } else if (maybeRain.includes(data["current"]["condition"]["code"])) {
+                document.querySelector('#pic').src = "299.png";
+            } else if (rain.includes(data["current"]["condition"]["code"])) {
+                document.querySelector('#pic').src = "308.png";
+            } else if (snow.includes(data["current"]["condition"]["code"])) {
+                document.querySelector('#pic').src = "338.png";
+            } else if (thunder.includes(data["current"]["condition"]["code"])) {
+                document.querySelector('#pic').src = "389.png";
+            }
 
             mainPlate.innerHTML = `Current Weather for ${location}:`;
 
             icon = document.querySelector('#icon');
 
-            if (data["current"]["condition"]["code"] == "1009") {
-                icon.innerHTML = "Condition: Overcast";
-            } else if (data["current"]["condition"]["code"] == "1003") {
-                icon.innerHTML = "Condition: Partially Cloud";
-            } else if (data["current"]["condition"]["code"] == "1000") {
-                icon.innerHTML = "Condition: Sunny";
-            }
-
+            icon.innerHTML = data["current"]["condition"]["text"];
+            
             //turn on the forecast container
             document.querySelector('.forecast')
 
@@ -47,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
             high.innerHTML = `Forecasted High: ${data["forecast"]["forecastday"]["0"]["day"]["maxtemp_f"]}°F / ${data["forecast"]["forecastday"]["0"]["day"]["maxtemp_c"]}°C`;
 
             low = document.querySelector('#low');
-            low.innerHTML = `Forecasted High: ${data["forecast"]["forecastday"]["0"]["day"]["mintemp_f"]}°F / ${data["forecast"]["forecastday"]["0"]["day"]["mintemp_c"]}°C`;
+            low.innerHTML = `Forecasted Low: ${data["forecast"]["forecastday"]["0"]["day"]["mintemp_f"]}°F / ${data["forecast"]["forecastday"]["0"]["day"]["mintemp_c"]}°C`;
 
             //turn on the container
             document.querySelector('.container').style.display = "block";
